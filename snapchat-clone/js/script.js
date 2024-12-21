@@ -1,4 +1,4 @@
-
+console.log("Hello Dev !");
 document.addEventListener("DOMContentLoaded", function() {
     // Simple animation for button on hover
     const btn = document.querySelector('button.btn-primary');
