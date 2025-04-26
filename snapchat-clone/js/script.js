@@ -22,13 +22,15 @@ document.addEventListener("DOMContentLoaded", () => {
   // Optional: Clean up event listeners when the element is removed
   // This prevents memory leaks in Single-Page Applications (SPAs)
   const observer = new MutationObserver((mutations) => {
-    for (const mutation of mutations) { // Use for...of for better readability and performance
-      for (const node of mutation.removedNodes) { // Use for...of for better readability and performance
-        if (node === btn) {
-          btn.removeEventListener('mouseenter', handleMouseEnter);
-          btn.removeEventListener('mouseleave', handleMouseLeave);
-          observer.disconnect(); // Stop observing
-          return; // Exit the loop early after disconnecting the observer
+    for (const mutation of mutations) {
+      if (mutation.removedNodes) {
+        for (const node of mutation.removedNodes) {
+          if (node === btn) {
+            btn.removeEventListener('mouseenter', handleMouseEnter);
+            btn.removeEventListener('mouseleave', handleMouseLeave);
+            observer.disconnect();
+            return;
+          }
         }
       }
     }
