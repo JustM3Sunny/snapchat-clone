@@ -23,15 +23,15 @@ document.addEventListener("DOMContentLoaded", () => {
   // This prevents memory leaks in Single-Page Applications (SPAs)
   const observer = new MutationObserver((mutations) => {
     for (const mutation of mutations) {
-      if (mutation.removedNodes) {
-        for (const node of mutation.removedNodes) {
+      if (mutation.type === 'childList') { // Check if the mutation is a childList mutation
+        mutation.removedNodes.forEach(node => {
           if (node === btn) {
             btn.removeEventListener('mouseenter', handleMouseEnter);
             btn.removeEventListener('mouseleave', handleMouseLeave);
             observer.disconnect();
             return;
           }
-        }
+        });
       }
     }
   });
@@ -40,12 +40,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Consider observing a more specific parent element if possible
   // For example, if the button is always inside a specific div with id "button-container":
-  // const buttonContainer = document.getElementById('button-container');
-  // if (buttonContainer) {
-  //   observer.observe(buttonContainer, { childList: true });
-  // } else {
-  //   console.warn("Button container not found, observing document.body instead.");
-  // }
+  const buttonContainer = document.getElementById('button-container');
+  if (buttonContainer) {
+    observer.observe(buttonContainer, { childList: true });
+  } else {
+    console.warn("Button container not found, observing document.body instead.");
+  }
 });
 
 /* CSS (example - should be in a separate stylesheet)
