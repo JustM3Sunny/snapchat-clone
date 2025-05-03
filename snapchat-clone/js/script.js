@@ -22,18 +22,17 @@ document.addEventListener("DOMContentLoaded", () => {
   // Optional: Clean up event listeners when the element is removed
   // This prevents memory leaks in Single-Page Applications (SPAs)
   const observer = new MutationObserver((mutations) => {
-    for (const mutation of mutations) {
+    mutations.forEach(mutation => {
       if (mutation.type === 'childList') {
-        for (const removedNode of mutation.removedNodes) {
+        mutation.removedNodes.forEach(removedNode => {
           if (removedNode === btn) {
             btn.removeEventListener('mouseenter', handleMouseEnter);
             btn.removeEventListener('mouseleave', handleMouseLeave);
             observer.disconnect();
-            return;
           }
-        }
+        });
       }
-    }
+    });
   });
 
   // Observe the parent element of the button, if it exists, otherwise observe the document body.
