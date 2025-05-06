@@ -22,14 +22,14 @@ document.addEventListener("DOMContentLoaded", () => {
   // Optional: Clean up event listeners when the element is removed
   // This prevents memory leaks in Single-Page Applications (SPAs)
   const observer = new MutationObserver((mutations) => {
-    for (const mutation of mutations) { // Use for...of for better readability
+    for (const mutation of mutations) {
       if (mutation.type === 'childList') {
-        for (const removedNode of mutation.removedNodes) { // Use for...of for better readability
+        for (const removedNode of mutation.removedNodes) {
           if (removedNode === btn) {
             btn.removeEventListener('mouseenter', handleMouseEnter);
             btn.removeEventListener('mouseleave', handleMouseLeave);
             observer.disconnect();
-            return; // Exit the loop and observer after detaching
+            return;
           }
         }
       }
@@ -47,13 +47,3 @@ document.addEventListener("DOMContentLoaded", () => {
     observer.disconnect();
   });
 });
-
-/* CSS (example - should be in a separate stylesheet)
-.btn-primary {
-  transition: transform 0.2s ease-in-out; /* Smooth transition */
-}
-
-.btn-primary.hovered {
-  transform: scale(1.1);
-}
-*/
